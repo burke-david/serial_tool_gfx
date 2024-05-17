@@ -42,6 +42,16 @@
  * Prototypes
  *****************************************************************************/
 
+
+/**
+ * @brief Dumps a byte as hexadecimal.
+ *
+ * This function takes a byte as input and prints its hexadecimal representation.
+ *
+ * @param byte The byte to be dumped.
+ */
+static void dump_byte_as_hex(uint8_t byte);
+
 /****************************************************************************
  * Functions
  *****************************************************************************/
@@ -49,10 +59,23 @@
 void app_process_data(uint8_t data)
 {
     // Process the data
-    printf("Processing data: %d\n", data);
+    dump_byte_as_hex(data);
 }
 
 void app_task_handler(void)
 {
     // Anything that needs to be done periodically that's application related.
+}
+
+
+static void dump_byte_as_hex(uint8_t byte)
+{
+    static int count = 0;
+    printf("%02X ", byte);
+    count++;
+    if (count == 16)
+    {
+        printf("\n");
+        count = 0;
+    }
 }
