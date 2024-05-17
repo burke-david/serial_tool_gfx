@@ -60,7 +60,7 @@ LIBS		:= $(patsubst %,-L%, $(LIBDIRS:%/=%))
 SOURCES		:= $(wildcard $(patsubst %,%/*.c, $(SOURCEDIRS)))
 
 # define the C object files 
-OBJECTS		:= $(SOURCES:.c=.o)
+OBJECTS		:= $(patsubst %.c,$(BUILD_DIR)/%.o,$(SOURCES))
 
 # define the dependency output files
 DEPS		:= $(OBJECTS:.o=.d)
@@ -90,7 +90,8 @@ $(MAIN): $(OBJECTS)
 # the rule(a .c file) and $@: the name of the target of the rule (a .o file) 
 # -MMD generates dependency output files same name as the .o file
 # (see the gnu make manual section about automatic variables)
-.c.o:
+$(BUILD_DIR)/%.o: %.c
+	$(MD) -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c -MMD $<  -o $@
 
 .PHONY: clean
