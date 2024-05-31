@@ -60,7 +60,11 @@
 /*
  * Change the Baudrate in accordance with your requirement
  */
+#ifdef _WIN32
+#define BAUD_RATE	CBR_115200
+#else
 #define BAUD_RATE	B115200
+#endif
 
 #define SERIAL_RX_BUF_LENGTH 1024U * 10U
 #define SERIAL_TX_BUF_LENGTH 1024U * 10U
@@ -209,9 +213,10 @@ void serial_close()
 void serial_task()
 {
     unsigned char c;
-    int bytes_written;
+
 
 #ifdef _WIN32
+    DWORD bytes_written;
     DWORD bytesRead;
     if (serial_port == INVALID_HANDLE_VALUE) return;
 
@@ -229,6 +234,8 @@ void serial_task()
         } while (!ring_buf_is_empty(&tx_buf));
     }
 #else
+    int bytes_written;
+
     if (serial_port <= 0) return;
 
     if (read(serial_port, &c, 1) > 0) {
