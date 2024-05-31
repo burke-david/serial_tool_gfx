@@ -40,10 +40,14 @@
 #include <string.h>
 #include <stdint.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <fcntl.h>		// Contains file controls like O_RDWR
 #include <errno.h>		// Error integer and strerror() function
 #include <termios.h>	// Contains POSIX terminal control definitions
 #include <unistd.h>		// write(), read(), close()
+#endif
 
 #include "../buffer/ring_buf.h"
 #include "serial.h"
@@ -65,7 +69,11 @@
  * Variables
  *****************************************************************************/
 
+#ifdef _WIN32
+static HANDLE serial_port = INVALID_HANDLE_VALUE;
+#else
 static int serial_port = -1;
+#endif
 
 static ring_buf_t rx_buf, tx_buf;
 static uint8_t rx_data[SERIAL_RX_BUF_LENGTH];
@@ -81,6 +89,46 @@ static uint8_t tx_data[SERIAL_TX_BUF_LENGTH];
 
 bool serial_init(const char *path)
 {
+
+#ifdef _WIN32
+
+    serial_port = CreateFile(path, GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+    if (serial_port == INVALID_HANDLE_VALUE) {
+        printf("Error opening serial port %s\n", path);
+        return false;
+    }
+
+    DCB dcbSerialParams = {0};
+    dcbSerialParams.DCBlength = sizeof(dcbSerialParams);
+
+    if (!GetCommState(serial_port, &dcbSerialParams)) {
+        printf("Error getting serial port state\n");
+        return false;
+    }
+
+    dcbSerialParams.BaudRate = BAUD_RATE;
+    dcbSerialParams.ByteSize = 8;
+    dcbSerialParams.StopBits = ONESTOPBIT;
+    dcbSerialParams.Parity = NOPARITY;
+
+    if (!SetCommState(serial_port, &dcbSerialParams)) {
+        printf("Error setting serial port state\n");
+        return false;
+    }
+
+    COMMTIMEOUTS timeouts = {0};
+    timeouts.ReadIntervalTimeout = 50;
+    timeouts.ReadTotalTimeoutConstant = 50;
+    timeouts.ReadTotalTimeoutMultiplier = 10;
+    timeouts.WriteTotalTimeoutConstant = 50;
+    timeouts.WriteTotalTimeoutMultiplier = 10;
+
+    if (!SetCommTimeouts(serial_port, &timeouts)) {
+        printf("Error setting serial port timeouts\n");
+        return false;
+    }
+#else
     struct termios tio;
     /*
         https://man7.org/linux/man-pages/man2/open.2.html
@@ -128,6 +176,8 @@ bool serial_init(const char *path)
 
     tcsetattr(serial_port,TCSANOW,&tio); 
 
+#endif
+
     /* Initialize rx and tx buffers */
     ring_buf_init(&rx_buf, rx_data, SERIAL_RX_BUF_LENGTH, sizeof(uint8_t));
     ring_buf_init(&tx_buf, tx_data, SERIAL_TX_BUF_LENGTH, sizeof(uint8_t));
@@ -137,48 +187,65 @@ bool serial_init(const char *path)
 
 void serial_close()
 {
-    if(serial_port)
-    {
-        close(serial_port); 
-        printf("serial_port: %d closed\n", serial_port);
-    } 
-    else
-    {
+#ifdef _WIN32
+    if (serial_port != INVALID_HANDLE_VALUE) {
+        CloseHandle(serial_port);
+        printf("serial_port closed\n");
+    } else {
         printf("No port opened\n");
     }
-
+    serial_port = INVALID_HANDLE_VALUE;
+#else
+    if (serial_port > 0) {
+        close(serial_port);
+        printf("serial_port: %d closed\n", serial_port);
+    } else {
+        printf("No port opened\n");
+    }
     serial_port = -1;
+#endif
 }
 
 void serial_task()
 {
     unsigned char c;
-
     int bytes_written;
 
-    if(serial_port <= 0) return;
+#ifdef _WIN32
+    DWORD bytesRead;
+    if (serial_port == INVALID_HANDLE_VALUE) return;
 
-    if(read(serial_port, &c, 1) > 0)
-    {
+    if (ReadFile(serial_port, &c, 1, &bytesRead, NULL) && bytesRead > 0) {
         ring_buf_push(&rx_buf, &c);
-        // printf("%c", c);
     }
 
-    if(!ring_buf_is_empty(&tx_buf))
-    {
-        do
-        {
-            if(ring_buf_pop(&tx_buf, &c))
-            {
-                bytes_written = write(serial_port, &c, 1);
-                // printf("TX:<%02X>\n", c);
-                if(1 != bytes_written)
-                {
+    if (!ring_buf_is_empty(&tx_buf)) {
+        do {
+            if (ring_buf_pop(&tx_buf, &c)) {
+                if (!WriteFile(serial_port, &c, 1, &bytes_written, NULL) || bytes_written != 1) {
                     fprintf(stderr, "write failed\n");
                 }
             }
         } while (!ring_buf_is_empty(&tx_buf));
     }
+#else
+    if (serial_port <= 0) return;
+
+    if (read(serial_port, &c, 1) > 0) {
+        ring_buf_push(&rx_buf, &c);
+    }
+
+    if (!ring_buf_is_empty(&tx_buf)) {
+        do {
+            if (ring_buf_pop(&tx_buf, &c)) {
+                bytes_written = write(serial_port, &c, 1);
+                if (1 != bytes_written) {
+                    fprintf(stderr, "write failed\n");
+                }
+            }
+        } while (!ring_buf_is_empty(&tx_buf));
+    }
+#endif
 }
 
 bool serial_rx_buf_is_empty()
