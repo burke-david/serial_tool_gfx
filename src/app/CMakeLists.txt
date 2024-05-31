@@ -1,0 +1,1 @@
+add_library(app app_cli.c app.c)

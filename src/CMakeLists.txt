@@ -1,0 +1,7 @@
+add_subdirectory(app)
+add_subdirectory(buffer)
+add_subdirectory(cli)
+add_subdirectory(serial)
+add_subdirectory(time_funcs)
+add_executable(serial_tool main.c)
+target_link_libraries(serial_tool app buffer cli serial time_funcs)
