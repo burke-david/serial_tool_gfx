@@ -78,4 +78,5 @@ static void dump_byte_as_hex(uint8_t byte)
         printf("\n");
         count = 0;
     }
+    fflush(stdout);
 }
