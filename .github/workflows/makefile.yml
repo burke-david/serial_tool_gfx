@@ -41,6 +41,7 @@ jobs:
       - run: ./scripts/process_results.sh
       - name: Analysis Comment
         uses: thollander/actions-comment-pull-request@v2
+        if: github.event_name == 'pull_request'
         with:
           filePath: ./build/test/process/results.md
           comment_tag: analysis
