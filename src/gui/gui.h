@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * File        app.h
+ * File        gui.h
  * Created by  David Burke
  * Version     1.0
  *
  */
 
-#ifndef APP_H_
-#define APP_H_
+#ifndef GUI_H_
+#define GUI_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,29 +49,16 @@ extern "C" {
  * Function Prototypes
  *****************************************************************************/
 
-
-bool app_init(void);
-
 /**
- * @brief Processes the given data.
- *
- * This function is responsible for processing the provided data.
- * It takes a uint8_t data as input and performs the necessary operations.
- *
- * @param data The data to be processed.
- */
-void app_process_data(uint8_t data);
-
-/**
- * @brief Handles the application task.
+ * @brief Initialize the GUI
  * 
- * This function is responsible for handling the application task.
- * It should be called periodically to perform the necessary operations
- * for the application.
+ * @return bool 
  */
-void app_task_handler(void);
+bool gui_init(uint32_t process_period);
+
+void gui_task(void);
 
 #ifdef __cplusplus
 }
 #endif
-#endif /* APP_H_ */
+#endif /* GUI_H_ */
