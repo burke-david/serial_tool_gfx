@@ -32,7 +32,8 @@
     - +:tests/**
     - -:tests/support
   :source:
-    - src/**
+#    - src/**
+    - src/buffer
 #    - src/module1
 #    - src/module2
     

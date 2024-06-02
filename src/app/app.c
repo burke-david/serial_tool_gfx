@@ -28,6 +28,7 @@
  */
 
 #include "app.h"
+#include "../gui/gui.h"
 #include <stdio.h>
 
 /****************************************************************************
@@ -56,6 +57,11 @@ static void dump_byte_as_hex(uint8_t byte);
  * Functions
  *****************************************************************************/
 
+bool app_init(void)
+{
+    return gui_init(5);
+}
+
 void app_process_data(uint8_t data)
 {
     // Process the data
@@ -64,7 +70,7 @@ void app_process_data(uint8_t data)
 
 void app_task_handler(void)
 {
-    // Anything that needs to be done periodically that's application related.
+    gui_task();
 }
 
 

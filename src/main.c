@@ -128,6 +128,11 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    if (!app_init()) {
+        printf("APP failed initialization\n");
+        return 0;
+    }
+
     do {
         /* Call the serial task periodically or as fast as is reasonable */
         serial_task();
