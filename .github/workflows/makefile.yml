@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        submodules: true
     - name: Install SDL2
       run: sudo apt-get install -y libsdl2-dev
     - run: ./scripts/build.sh
@@ -26,6 +28,8 @@ jobs:
       run: sudo gem install ceedling
     - name: 'run tests'
       uses: actions/checkout@v4
+      with:
+        submodules: true
     - run: ./scripts/test.sh
   analysis:
     permissions: 
@@ -40,6 +44,8 @@ jobs:
           pip install gcovr
       - name: 'run results process'
         uses: actions/checkout@v4
+        with:
+          submodules: true
       - run: ./scripts/process_results.sh
       - name: Analysis Comment
         uses: thollander/actions-comment-pull-request@v2
