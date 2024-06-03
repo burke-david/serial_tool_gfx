@@ -14,4 +14,4 @@ target_include_directories(lvgl PUBLIC . ${SDL2_INCLUDE_DIRS})
 target_link_libraries(lvgl ${SDL2_LIBRARIES})
 
 add_executable(serial_tool main.c)
-target_link_libraries(serial_tool app gui buffer cli serial time_funcs lvgl)
+target_link_libraries(serial_tool app gui buffer cli serial time_funcs lvgl m)

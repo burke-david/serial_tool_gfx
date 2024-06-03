@@ -31,6 +31,7 @@
 #include "led.h"
 #include "../time_funcs/time_funcs.h"
 #include "../lvgl/lvgl.h"
+#include <stdio.h>
 
 
 
@@ -100,6 +101,8 @@ bool gui_init(uint32_t process_period)
 
     status = initialize_gui();
 
+    // create_tab_view();
+
     return status;
 }
 
@@ -110,9 +113,12 @@ void gui_task(void)
         return;
     }
 
-    next_task_tick += (now + task_period);
+    next_task_tick = (now + task_period);
 
     lv_timer_handler();
+
+    lv_tick_inc(task_period);
+
     led_process();
 }
 
