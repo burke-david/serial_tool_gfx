@@ -53,3 +53,4 @@ jobs:
         with:
           filePath: ./build/test/process/results.md
           comment_tag: analysis
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
