@@ -41,4 +41,4 @@ add_executable(${PROJECT_NAME}
 
 #string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} m)
