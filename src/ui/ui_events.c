@@ -6,13 +6,13 @@
 #include "ui.h"
 #include <stdio.h>
 
-void UpArrowPressed(lv_event_t * e)
+void EventButtonUpArrowPressed(lv_event_t * e)
 {
 	// Your code here
 	printf("UpArrowPressed\n");
 }
 
-void DownArrowPressed(lv_event_t * e)
+void EventButtonDownArrowPressed(lv_event_t * e)
 {
 	// Your code here
 	printf("DownArrowPressed\n");

@@ -16,8 +16,8 @@ lv_obj_t *ui_Panel4;
 lv_obj_t *ui_Panel3;
 void ui_event_Button_Up_Arrow( lv_event_t * e);
 lv_obj_t *ui_Button_Up_Arrow;
-void ui_event_Button_Dn_Arrow( lv_event_t * e);
-lv_obj_t *ui_Button_Dn_Arrow;
+void ui_event_Button_Down_Arrow( lv_event_t * e);
+lv_obj_t *ui_Button_Down_Arrow;
 lv_obj_t *ui_Panel2;
 lv_obj_t *ui_Chart1;
 lv_obj_t *ui_TextArea1;
@@ -37,13 +37,13 @@ lv_obj_t *ui____initial_actions0;
 void ui_event_Button_Up_Arrow( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      UpArrowPressed( e );
+      EventButtonUpArrowPressed( e );
 }
 }
-void ui_event_Button_Dn_Arrow( lv_event_t * e) {
+void ui_event_Button_Down_Arrow( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      DownArrowPressed( e );
+      EventButtonDownArrowPressed( e );
 }
 }
 
