@@ -28,7 +28,6 @@ void ui_event_Button_Up_Arrow( lv_event_t * e);
 extern lv_obj_t *ui_Button_Up_Arrow;
 void ui_event_Button_Down_Arrow( lv_event_t * e);
 extern lv_obj_t *ui_Button_Down_Arrow;
-extern lv_obj_t *ui_Panel2;
 extern lv_obj_t *ui_Chart1;
 extern lv_obj_t *ui_TextArea1;
 extern lv_obj_t *ui____initial_actions0;

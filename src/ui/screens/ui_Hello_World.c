@@ -24,12 +24,12 @@ lv_obj_set_x( ui_Panel4, -4 );
 lv_obj_set_y( ui_Panel4, -184 );
 lv_obj_set_align( ui_Panel4, LV_ALIGN_CENTER );
 lv_obj_set_flex_flow(ui_Panel4,LV_FLEX_FLOW_ROW);
-lv_obj_set_flex_align(ui_Panel4, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+lv_obj_set_flex_align(ui_Panel4, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START);
 lv_obj_clear_flag( ui_Panel4, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
 ui_Panel3 = lv_obj_create(ui_Panel4);
+lv_obj_set_width( ui_Panel3, 150);
 lv_obj_set_height( ui_Panel3, 271);
-lv_obj_set_width( ui_Panel3, LV_SIZE_CONTENT);  /// 319
 lv_obj_set_x( ui_Panel3, -1145 );
 lv_obj_set_y( ui_Panel3, -24 );
 lv_obj_set_align( ui_Panel3, LV_ALIGN_CENTER );
@@ -40,42 +40,37 @@ lv_obj_clear_flag( ui_Panel3, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 ui_Button_Up_Arrow = lv_imgbtn_create(ui_Panel3);
 lv_imgbtn_set_src(ui_Button_Up_Arrow, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_up_arrow_100px_png, NULL);
 lv_imgbtn_set_src(ui_Button_Up_Arrow, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_up_blk_arrow_100px_grn_highlight_png, NULL);
-lv_obj_set_height( ui_Button_Up_Arrow, 64);
 lv_obj_set_width( ui_Button_Up_Arrow, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_flex_grow( ui_Button_Up_Arrow, 1);
 lv_obj_set_align( ui_Button_Up_Arrow, LV_ALIGN_CENTER );
 
 ui_Button_Down_Arrow = lv_imgbtn_create(ui_Panel3);
 lv_imgbtn_set_src(ui_Button_Down_Arrow, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_dn_arrow_100px_png, NULL);
 lv_imgbtn_set_src(ui_Button_Down_Arrow, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_dn_blk_arrow_100px_grn_highlight_png, NULL);
-lv_obj_set_height( ui_Button_Down_Arrow, 64);
 lv_obj_set_width( ui_Button_Down_Arrow, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_flex_grow( ui_Button_Down_Arrow, 1);
 lv_obj_set_align( ui_Button_Down_Arrow, LV_ALIGN_CENTER );
 
-ui_Panel2 = lv_obj_create(ui_Panel4);
-lv_obj_set_height( ui_Panel2, 281);
-lv_obj_set_flex_grow( ui_Panel2, 1);
-lv_obj_set_x( ui_Panel2, 1748 );
-lv_obj_set_y( ui_Panel2, 53 );
-lv_obj_set_align( ui_Panel2, LV_ALIGN_CENTER );
-lv_obj_set_flex_flow(ui_Panel2,LV_FLEX_FLOW_ROW);
-lv_obj_set_flex_align(ui_Panel2, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_START);
-lv_obj_clear_flag( ui_Panel2, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-
-ui_Chart1 = lv_chart_create(ui_Panel2);
-lv_obj_set_height( ui_Chart1, lv_pct(98));
-lv_obj_set_flex_grow( ui_Chart1, 1);
-lv_obj_set_x( ui_Chart1, -221 );
-lv_obj_set_y( ui_Chart1, 201 );
-lv_obj_set_align( ui_Chart1, LV_ALIGN_CENTER );
+ui_Chart1 = lv_chart_create(ui_Panel4);
+lv_obj_set_width( ui_Chart1, lv_pct(85));
+lv_obj_set_height( ui_Chart1, lv_pct(96));
+lv_obj_set_x( ui_Chart1, 19 );
+lv_obj_set_y( ui_Chart1, -9 );
+lv_obj_set_align( ui_Chart1, LV_ALIGN_LEFT_MID );
 lv_chart_set_type( ui_Chart1, LV_CHART_TYPE_LINE);
+lv_chart_set_point_count( ui_Chart1, 100);
+lv_chart_set_range( ui_Chart1, LV_CHART_AXIS_PRIMARY_Y, 0, 255);
+lv_chart_set_div_line_count( ui_Chart1, 6, 5);
 lv_chart_set_axis_tick( ui_Chart1, LV_CHART_AXIS_PRIMARY_X, 10, 5, 5, 2, true, 50);
-lv_chart_set_axis_tick( ui_Chart1, LV_CHART_AXIS_PRIMARY_Y, 10, 5, 5, 2, true, 50);
-lv_chart_set_axis_tick( ui_Chart1, LV_CHART_AXIS_SECONDARY_Y, 10, 5, 5, 2, true, 25);
-lv_chart_series_t* ui_Chart1_series_1 = lv_chart_add_series(ui_Chart1, lv_color_hex(0x808080), LV_CHART_AXIS_PRIMARY_Y);
+lv_chart_set_axis_tick( ui_Chart1, LV_CHART_AXIS_PRIMARY_Y, 1, 25, 6, 2, true, 50);
+lv_chart_set_axis_tick( ui_Chart1, LV_CHART_AXIS_SECONDARY_Y, 10, 5, 5, 2, false, 25);
+lv_chart_series_t* ui_Chart1_series_1 = lv_chart_add_series(ui_Chart1, lv_color_hex(0x00FF00), LV_CHART_AXIS_PRIMARY_Y);
 static lv_coord_t ui_Chart1_series_1_array[] = { 0,10,20,40,80,80,40,20,10,0 };
 lv_chart_set_ext_y_array(ui_Chart1, ui_Chart1_series_1, ui_Chart1_series_1_array);
-lv_obj_set_style_bg_color(ui_Chart1, lv_color_hex(0x0CB9FF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_color(ui_Chart1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_Chart1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_border_color(ui_Chart1, lv_color_hex(0x0000FF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_border_opa(ui_Chart1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 
 
