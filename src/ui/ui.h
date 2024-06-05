@@ -26,15 +26,17 @@ extern lv_obj_t *ui_Panel4;
 extern lv_obj_t *ui_Panel3;
 void ui_event_Button_Up_Arrow( lv_event_t * e);
 extern lv_obj_t *ui_Button_Up_Arrow;
-void ui_event_Button_Dn_Arrow( lv_event_t * e);
-extern lv_obj_t *ui_Button_Dn_Arrow;
+void ui_event_Button_Down_Arrow( lv_event_t * e);
+extern lv_obj_t *ui_Button_Down_Arrow;
 extern lv_obj_t *ui_Panel2;
 extern lv_obj_t *ui_Chart1;
 extern lv_obj_t *ui_TextArea1;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_up_arrow_100px_png);   // assets/up_arrow_100px.png
+LV_IMG_DECLARE( ui_img_up_blk_arrow_100px_grn_highlight_png);   // assets/up_blk_arrow_100px_grn_highlight.png
 LV_IMG_DECLARE( ui_img_dn_arrow_100px_png);   // assets/dn_arrow_100px.png
+LV_IMG_DECLARE( ui_img_dn_blk_arrow_100px_grn_highlight_png);   // assets/dn_blk_arrow_100px_grn_highlight.png
 
 
 LV_FONT_DECLARE( ui_font_Courier_New_16);
