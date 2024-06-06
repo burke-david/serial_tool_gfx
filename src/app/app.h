@@ -50,7 +50,9 @@ extern "C" {
  *****************************************************************************/
 
 
-bool app_init(void);
+bool app_init(const char *serial_port_path);
+
+void app_deinit(void);
 
 /**
  * @brief Processes the given data.

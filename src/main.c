@@ -34,9 +34,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdarg.h>
-// #include <bits/getopt_core.h>
 
-#include "serial/serial.h"
 #include "app/app.h"
 #include "app/app_cli.h"
 
@@ -113,14 +111,10 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    if(!serial_init(port_name))
-    {
-        printf("port %s INVALID\n", port_name);
-        serial_close();
-        return 0;  
+    if (!app_init(port_name)) {
+        printf("APP failed initialization\n");
+        return 0;
     }
-
-    printf("port %s opened successfully\n", port_name);
 
     if(!app_cli_init(&keep_running))
     {
@@ -128,24 +122,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    if (!app_init()) {
-        printf("APP failed initialization\n");
-        return 0;
-    }
-
     do {
-        /* Call the serial task periodically or as fast as is reasonable */
-        serial_task();
-
-        /* Do something with any data currently in the RX buffer */
-        if (!serial_rx_buf_is_empty()) {
-            do {   
-                if (serial_rx_buf_pop((uint8_t*)&c)) {
-                    app_process_data((uint8_t)c);
-                }
-            } while (!serial_rx_buf_is_empty());
-        }
-
         /* Call the app task handler */
         app_task_handler();
 
@@ -157,7 +134,7 @@ int main(int argc, char *argv[])
 
     app_cli_deinit();
 
-    serial_close();
+    app_deinit();
 
     return 0;
 }

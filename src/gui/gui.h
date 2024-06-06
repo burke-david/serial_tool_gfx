@@ -58,6 +58,8 @@ bool gui_init(uint32_t process_period);
 
 void gui_task(void);
 
+void gui_process_byte(uint8_t byte);
+
 #ifdef __cplusplus
 }
 #endif

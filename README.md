@@ -1,6 +1,8 @@
-# Serial Tool
+# Serial Tool GFX
 
-Create a simple USB-to-Serial program in C to allow sending and receiving whatever protocol/data you want over serial.
+![serial_tool_gfx UI](docs/img/serial_tool_gfx.png)
+
+Use LVGL to create a graphical UI for displaying serial data. Based on the `serial_tool` repo which was to create a simple USB-to-Serial program in C to allow sending and receiving whatever protocol/data you want over serial.
 Run on Linux, Windows, or Mac.
 
 Testing has been done on an Ubuntu VM running in Parallels on a Macbook with Apple silicon, a Windows machine running Windows 11, and an x86 Ubuntu machine.

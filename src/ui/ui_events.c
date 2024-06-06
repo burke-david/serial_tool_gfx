@@ -9,12 +9,50 @@
 
 void EventButtonUpArrowPressed(lv_event_t * e)
 {
-	// Your code here
 	printf("UpArrowPressed\n");
 }
 
 void EventButtonDownArrowPressed(lv_event_t * e)
 {
-	// Your code here
 	printf("DownArrowPressed\n");
+}
+
+void slider_x_event_cb(lv_event_t * e)
+{
+    lv_obj_t * obj = lv_event_get_target(e);
+    int32_t v = lv_slider_get_value(obj);
+    lv_chart_set_zoom_x(ui_Chart1, v);
+}
+
+void slider_y_event_cb(lv_event_t * e)
+{
+    lv_obj_t * obj = lv_event_get_target(e);
+    int32_t v = lv_slider_get_value(obj);
+    lv_chart_set_zoom_y(ui_Chart1, v);
+}
+
+void button_0_event_cb(lv_event_t * e)
+{
+	printf("Button 0\n");
+	lv_textarea_set_text(ui_TextArea1, "...");
+}
+
+void button_1_event_cb(lv_event_t * e)
+{
+	printf("Button 1\n");
+}
+
+void button_2_event_cb(lv_event_t * e)
+{
+	printf("Button 2\n");
+}
+
+void button_3_event_cb(lv_event_t * e)
+{
+	printf("Button 3\n");
+}
+
+void button_4_event_cb(lv_event_t * e)
+{
+	printf("Button 4\n");
 }
