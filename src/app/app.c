@@ -29,6 +29,7 @@
 
 #include "app.h"
 #include "../gui/gui.h"
+#include "../serial/serial.h"
 #include <stdio.h>
 
 /****************************************************************************
@@ -53,26 +54,67 @@
  */
 static void dump_byte_as_hex(uint8_t byte);
 
+/**
+ * @brief Processes the given data.
+ *
+ * This function is responsible for processing the provided data.
+ * It takes a uint8_t data as input and performs the necessary operations.
+ *
+ * @param data The data to be processed.
+ */
+static void process_data(uint8_t data);
+
 /****************************************************************************
  * Functions
  *****************************************************************************/
 
-bool app_init(void)
-{
+bool app_init(const char *serial_port_path)
+{   
+    bool result = false;
+
+    result = serial_init(serial_port_path);
+    if (!result) {
+        serial_close();
+        printf("port %s INVALID\n", serial_port_path);
+        return false;
+    }
+
+    printf("port %s opened successfully\n", serial_port_path);
+
     return gui_init(5);
 }
 
-void app_process_data(uint8_t data)
+void app_deinit(void)
 {
-    // Process the data
-    dump_byte_as_hex(data);
+    serial_close();
 }
 
 void app_task_handler(void)
 {
-    gui_task();
+    char c;
+
+    /* Call the serial task periodically or as fast as is reasonable */
+    serial_task();
+
+    /* Do something with any data currently in the RX buffer */
+    if (!serial_rx_buf_is_empty()) {
+        do {   
+            if (serial_rx_buf_pop((uint8_t*)&c)) {
+                process_data((uint8_t)c);
+            }
+        } while (!serial_rx_buf_is_empty());
+    } 
+
+    gui_task();   
 }
 
+
+static void process_data(uint8_t data)
+{
+    // Process the data
+    dump_byte_as_hex(data);
+    gui_process_byte(data);
+}
 
 static void dump_byte_as_hex(uint8_t byte)
 {

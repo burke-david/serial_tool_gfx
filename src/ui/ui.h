@@ -23,19 +23,28 @@ extern "C" {
 void ui_Hello_World_screen_init(void);
 extern lv_obj_t *ui_Hello_World;
 extern lv_obj_t *ui_Panel4;
-extern lv_obj_t *ui_Panel3;
-void ui_event_Button_Up_Arrow( lv_event_t * e);
-extern lv_obj_t *ui_Button_Up_Arrow;
-void ui_event_Button_Down_Arrow( lv_event_t * e);
-extern lv_obj_t *ui_Button_Down_Arrow;
+void ui_event_Slider2( lv_event_t * e);
+extern lv_obj_t *ui_Slider2;
 extern lv_obj_t *ui_Chart1;
+void ui_event_Slider1( lv_event_t * e);
+extern lv_obj_t *ui_Slider1;
+extern lv_obj_t *ui_Panel5;
+extern lv_obj_t *ui_Panel6;
+void ui_event_ImgButton3( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton3;
+void ui_event_ImgButton1( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton1;
+void ui_event_ImgButton2( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton2;
+void ui_event_ImgButton4( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton4;
+void ui_event_ImgButton5( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton5;
 extern lv_obj_t *ui_TextArea1;
 extern lv_obj_t *ui____initial_actions0;
 
-LV_IMG_DECLARE( ui_img_up_arrow_100px_png);   // assets/up_arrow_100px.png
-LV_IMG_DECLARE( ui_img_up_blk_arrow_100px_grn_highlight_png);   // assets/up_blk_arrow_100px_grn_highlight.png
-LV_IMG_DECLARE( ui_img_dn_arrow_100px_png);   // assets/dn_arrow_100px.png
-LV_IMG_DECLARE( ui_img_dn_blk_arrow_100px_grn_highlight_png);   // assets/dn_blk_arrow_100px_grn_highlight.png
+LV_IMG_DECLARE( ui_img_stainless_circle_50px_green_off_png);   // assets/stainless_circle_50px_green_off.png
+LV_IMG_DECLARE( ui_img_stainless_circle_50px_green_on_png);   // assets/stainless_circle_50px_green_on.png
 
 
 LV_FONT_DECLARE( ui_font_Courier_New_16);

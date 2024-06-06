@@ -10,8 +10,13 @@
 extern "C" {
 #endif
 
-void EventButtonUpArrowPressed(lv_event_t * e);
-void EventButtonDownArrowPressed(lv_event_t * e);
+void slider_y_event_cb(lv_event_t * e);
+void slider_x_event_cb(lv_event_t * e);
+void button_0_event_cb(lv_event_t * e);
+void button_1_event_cb(lv_event_t * e);
+void button_2_event_cb(lv_event_t * e);
+void button_3_event_cb(lv_event_t * e);
+void button_4_event_cb(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/
